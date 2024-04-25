@@ -16,8 +16,5 @@ class ETF(Investment):
         self.data['Signal'] = np.where(self.data['Momentum'] > 0, 1, -1)
         self.data['Position'] = self.data['Signal'].diff()
 
-    def evaluate_performance(self):
-        # 类似前面的表现评估方法
-        super().evaluate_performance()
 
 

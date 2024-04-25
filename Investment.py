@@ -1,3 +1,6 @@
+from matplotlib import pyplot as plt
+
+
 class Investment:
     def __init__(self, ticker, start_date, end_date):
         self.ticker = ticker
@@ -19,5 +22,22 @@ class Investment:
         pass
 
     def evaluate_performance(self):
-        # 评估投资的总体表现
-        pass
+        """评估投资的总体表现"""
+        # 计算投资回报率
+        self.data['Market Return'] = self.data['Close'].pct_change()
+        self.data['Strategy Return'] = self.data['Market Return'] * self.data['Signal'].shift(1)
+        self.data['Cumulative Market Returns'] = (1 + self.data['Market Return']).cumprod()
+        self.data['Cumulative Strategy Returns'] = (1 + self.data['Strategy Return']).cumprod()
+
+        # 绘制收益曲线
+        plt.figure(figsize=(10,5))
+        plt.plot(self.data['Cumulative Market Returns'], label='Market Returns')
+        plt.plot(self.data['Cumulative Strategy Returns'], label='Strategy Returns')
+        plt.legend()
+        plt.show()
+
+        # 总体策略评估
+        total_market_return = self.data['Cumulative Market Returns'].iloc[-1]
+        total_strategy_return = self.data['Cumulative Strategy Returns'].iloc[-1]
+        print(f"Market Return: {total_market_return - 1:.2%}")
+        print(f"Strategy Return: {total_strategy_return - 1:.2%}")

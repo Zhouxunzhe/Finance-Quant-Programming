@@ -15,6 +15,3 @@ class Fund(Investment):
         self.data['Signal'] = 0
         self.data['Signal'] = np.where(self.data['Momentum'] > 0, 1, -1)
         self.data['Position'] = self.data['Signal'].diff()
-
-    def evaluate_performance(self):
-        super().evaluate_performance()

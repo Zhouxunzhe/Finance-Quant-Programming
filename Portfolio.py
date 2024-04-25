@@ -3,9 +3,9 @@ from Commodity import Commodity
 from ETF import ETF
 from Fund import Fund
 from Bond import Bond
-from Commodity import RiskManagement
 import datetime
 
+from TechnicalLib import RiskManagement
 
 class InvestmentPortfolio:
     def __init__(self, initial_capital):
