@@ -30,11 +30,9 @@ class Investment:
         self.evaluate_performance(result=result, plot=plot)
 
     def calculate_indicators(self):
-        # 计算交易所需的技术指标，例如移动平均线、RSI等
         pass
 
     def execute_strategy(self):
-        # 实现交易策略
         pass
 
     def evaluate_performance(self, result=False, plot=False):
