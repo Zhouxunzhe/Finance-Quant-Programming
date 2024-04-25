@@ -50,12 +50,13 @@ class StockInvestment(Investment):
         # 交易仿真
         self.data['Portfolio_value'] = self.initial_capital
         for i, row in self.data.iterrows():
-            if row['Position'] < 0:
+            if row['Position'] < 0 and self.capital > 1:
                 # buy
                 # kelly_fraction = self.calculate_kelly_criterion()
                 kelly_fraction = 1.0
-                self.position_size = (self.capital * kelly_fraction) / row['close']
-                self.capital -= self.position_size * row['close']
+                position = self.capital * kelly_fraction / row['close']
+                self.capital -= position * row['close']
+                self.position_size += position
                 print(f"buy: {self.capital}, {self.position_size}, {row['close']}")
             elif row['Position'] > 0:
                 # sell
@@ -75,7 +76,7 @@ class StockInvestment(Investment):
 
 # 使用示例
 if __name__ == '__main__':
-    stock = StockInvestment('sz000002')  # 示例股票代码
+    stock = StockInvestment('sz000001')  # 示例股票代码
     stock.fetch_data('20200101', '20201231')
     final_return = stock.backtest_strategy()
     print(f'策略最终回报: {final_return * 100:.2f}%')
