@@ -75,7 +75,7 @@ class StockInvestment(Investment):
 
 # 使用示例
 if __name__ == '__main__':
-    stock = StockInvestment('sz000001')  # 示例股票代码
+    stock = StockInvestment('sz000002')  # 示例股票代码
     stock.fetch_data('20200101', '20201231')
     final_return = stock.backtest_strategy()
     print(f'策略最终回报: {final_return * 100:.2f}%')
