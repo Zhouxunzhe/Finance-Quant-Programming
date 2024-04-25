@@ -50,7 +50,7 @@ class PositionSizing:
         return winProb, RewardRiskRatio
 
     def trainBond(self, ticker):
-        from Bond import Bond
+        from investment.Bond import Bond
         bond = Bond(ticker, self.start_date, self.end_date)
         bond.run()
         winProb, RewardRiskRatio = self.calculateWPRRR(bond)
@@ -58,7 +58,7 @@ class PositionSizing:
         self.target[ticker] = bondInfo
     
     def trainCommodity(self, ticker):
-        from Commodity import Commodity
+        from investment.Future import Commodity
         commodity = Commodity(ticker, self.start_date, self.end_date)
         commodity.run()
         winProb, RewardRiskRatio = self.calculateWPRRR(commodity)
@@ -66,7 +66,7 @@ class PositionSizing:
         self.target[ticker] = commodityInfo
     
     def trainETF(self, ticker):
-        from ETF import ETF
+        from investment.ETF import ETF
         etf = ETF(ticker, self.start_date, self.end_date)
         etf.run()
         winProb, RewardRiskRatio = self.calculateWPRRR(etf)
@@ -74,7 +74,7 @@ class PositionSizing:
         self.target[ticker] = etfInfo
     
     def trainFund(self, ticker):
-        from Fund import Fund
+        from investment.Fund import Fund
         fund = Fund(ticker, self.start_date, self.end_date)
         fund.run()
         winProb, RewardRiskRatio = self.calculateWPRRR(fund)
@@ -82,7 +82,7 @@ class PositionSizing:
         self.target[ticker] = fundInfo
     
     def trainStock(self, ticker):
-        from Stock import Stock
+        from investment.Stock import Stock
         stock = Stock(ticker, self.start_date, self.end_date)
         stock.run()
         winProb, RewardRiskRatio = self.calculateWPRRR(stock)
