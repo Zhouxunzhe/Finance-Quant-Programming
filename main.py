@@ -22,7 +22,8 @@ if __name__ == '__main__':
 
     print(sizing['600519'].positionSize)
     print(sizing['600519'].winProb)
-    print(sizing['600519'].RewardRiskRatio)
+    print(sizing['600519'].rateWin)
+    print(sizing['600519'].rateLoss)
 
     # 初始化投资组合，设定初始资本
     initial_capital = 10000
