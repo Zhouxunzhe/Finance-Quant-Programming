@@ -29,13 +29,7 @@ class InvestmentPortfolio:
             if 'Cumulative Strategy Returns' in inv[0].data.columns:
                 for day in range(len(inv[0].data)):
                     if inv[0].data['Signal'].iloc[day] == 1:
-                        try:
-                            buynum = int((invcapital * self.sizing[inv[0].ticker].positionSize) / inv[0].data['收盘'].iloc[day])
-                        except Exception:
-                            print("invcapital", invcapital)
-                            print("positionSize", self.sizing[inv[0].ticker].positionSize)
-                            print("close", inv[0].data['收盘'].iloc[day])
-                            raise Exception('interrupt')
+                        buynum = int((invcapital * self.sizing[inv[0].ticker].positionSize) / inv[0].data['收盘'].iloc[day])
                         invnum += buynum
                         invcapital -= buynum * inv[0].data['收盘'].iloc[day]
                     elif inv[0].data['Signal'].iloc[day] == -1:
