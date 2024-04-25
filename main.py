@@ -20,11 +20,12 @@ if __name__ == '__main__':
     # sizing.train('TLT', 'Bond')
     # sizing.train('VFIAX', 'Fund')
 
-    print(sizing['600519'].positionSize)
-    print(sizing['600519'].winProb)
-    print(sizing['600519'].rateWin)
-    print(sizing['600519'].rateLoss)
-
+    # print(sizing['600519'].positionSize)
+    # print(sizing['600519'].winProb)
+    # print(sizing['600519'].rateWin)
+    # print(sizing['600519'].rateLoss)
+    if sizing['600519'].DSize > 0 and sizing['600519'].DSize <= 1:
+        sizing['600519'].positionSize = sizing['600519'].DSize
     # 初始化投资组合，设定初始资本
     initial_capital = 10000
     portfolio = InvestmentPortfolio(initial_capital, sizing)

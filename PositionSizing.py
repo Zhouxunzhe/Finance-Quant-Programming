@@ -7,13 +7,22 @@ class _TargetInfo:
         self.winProb = winProb
         self.rateWin = rateWin
         self.rateLoss = rateLoss
+        self.__positionSize = 1
     
     @property
-    def positionSize(self):
+    def DSize(self):
         """动态计算仓位规模"""
         first = self.winProb/self.rateLoss
         second = (1 - self.winProb)/self.rateWin
         return first - second
+    
+    @property
+    def positionSize(self):
+        return self.__positionSize
+    
+    @positionSize.setter
+    def positionSize(self, value):
+        self.__positionSize = value
 
 class PositionSizing:
     """训练标的物并记录胜率与赔率"""
