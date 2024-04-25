@@ -15,17 +15,10 @@ if __name__ == '__main__':
     # 训练标的物并记录胜率与赔率
     sizing = PositionSizing(train_start_date, train_end_date)
     sizing.train('600519', 'Stock')
-    # sizing.train('SPY', 'ETF')
-    # sizing.train('GC=F', 'Commodity')
-    # sizing.train('TLT', 'Bond')
-    # sizing.train('VFIAX', 'Fund')
 
-    # print(sizing['600519'].positionSize)
-    # print(sizing['600519'].winProb)
-    # print(sizing['600519'].rateWin)
-    # print(sizing['600519'].rateLoss)
     if sizing['600519'].DSize > 0 and sizing['600519'].DSize <= 1:
         sizing['600519'].positionSize = sizing['600519'].DSize
+    
     # 初始化投资组合，设定初始资本
     initial_capital = 10000
     portfolio = InvestmentPortfolio(initial_capital, sizing)
@@ -35,11 +28,7 @@ if __name__ == '__main__':
     invest_end_date = datetime.datetime(2020, 1, 1)
 
     # 添加不同的投资类型到投资组合
-    portfolio.add_investment(Stock('600519', invest_start_date, invest_end_date), initial_capital)
-    # portfolio.add_investment(ETF('SPY', invest_start_date, invest_end_date), initial_capital)
-    # portfolio.add_investment(Commodity('GC=F', invest_start_date, invest_end_date), initial_capital)
-    # portfolio.add_investment(Bond('TLT', invest_start_date, invest_end_date), initial_capital)
-    # portfolio.add_investment(Fund('VFIAX', invest_start_date, invest_end_date), initial_capital)
+    portfolio.add_investment(Stock('600519', invest_start_date, invest_end_date), initial_capital*1)
 
     # 运行整个投资组合
     portfolio.run()
