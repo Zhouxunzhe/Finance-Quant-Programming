@@ -19,7 +19,7 @@ class InvestmentPortfolio:
 
     def run(self, result=False, plot=False):
         for investment in self.investments:
-            investment.run(result=result, plot=plot)
+            investment[0].run(result=result, plot=plot)
 
     def portfolio_performance(self):
         totalcapital = 0
@@ -27,15 +27,15 @@ class InvestmentPortfolio:
             invcapital = inv[1]
             invnum = inv[2]
             if 'Cumulative Strategy Returns' in inv[0].data.columns:
-                for day in range(len(inv[0])):
-                    if inv[0].data['Signal'][day] == 1:
-                        buynum = (invcapital * self.sizing[inv[0].ticker].positionSize) / inv[0].data['Close'][day]
+                for day in range(len(inv[0].data)):
+                    if inv[0].data['Signal'].iloc[day] == 1:
+                        buynum = (invcapital * self.sizing[inv[0].ticker].positionSize) / inv[0].data['收盘'].iloc[day]
                         invnum += buynum
-                        invcapital -= buynum * inv[0].data['Close'][day]
-                    elif inv[0].data['Signal'][day] == -1:
-                        invcapital += invnum * inv[0].data['Close'][day]
+                        invcapital -= buynum * inv[0].data['收盘'].iloc[day]
+                    elif inv[0].data['Signal'].iloc[day] == -1:
+                        invcapital += invnum * inv[0].data['收盘'].iloc[day]
                         invnum = 0
-            totalcapital += (invcapital + inv[0].data['Close'][-1] * invnum)
+            totalcapital += (invcapital + inv[0].data['收盘'].iloc[-1] * invnum)
         total_return = (totalcapital - self.initial_capital) / self.initial_capital
         print(f"Total Portfolio Performance: {total_return:.2%}")
             

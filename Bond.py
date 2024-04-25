@@ -8,7 +8,7 @@ class Bond(Investment):
 
     def calculate_indicators(self):
         # 计算债券的收益率变动
-        self.data['Yield Change'] = self.data['Close'].pct_change(periods=14)
+        self.data['Yield Change'] = self.data['收盘'].pct_change(periods=14)
 
     def execute_strategy(self):
         # 当收益率降低时买入，增加时卖出

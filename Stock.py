@@ -17,7 +17,7 @@ class Stock(Investment):
     def execute_strategy(self):
         # 简单的移动平均线交叉策略
         self.data['Signal'] = 0
-        self.data['Signal'][50:] = np.where(self.data['SMA_20'][50:] > self.data['SMA_50'][50:], 1, 0)
+        self.data['Signal'] = np.where(self.data['SMA_20'] > self.data['SMA_50'], 1, 0)
         self.data['Position'] = self.data['Signal'].diff()
 
         # 记录交易
@@ -27,7 +27,7 @@ class Stock(Investment):
 if __name__ == '__main__':
     start_date = datetime.datetime(2019, 1, 1)
     end_date = datetime.datetime(2020, 1, 1)
-    aapl_stock = Stock('AAPL', start_date, end_date)
+    aapl_stock = Stock('600519', start_date, end_date)
     aapl_stock.calculate_indicators()
     aapl_stock.execute_strategy()
     aapl_stock.evaluate_performance()

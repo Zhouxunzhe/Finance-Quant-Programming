@@ -8,7 +8,7 @@ class Fund(Investment):
 
     def calculate_indicators(self):
         # 可以根据基金的特性设定指标，这里简单使用动量
-        self.data['Momentum'] = self.data['Close'].pct_change(periods=30) * 100
+        self.data['Momentum'] = self.data['收盘'].pct_change(periods=30) * 100
 
     def execute_strategy(self):
         # 简单的动量策略

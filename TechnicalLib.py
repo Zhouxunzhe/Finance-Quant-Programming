@@ -1,9 +1,9 @@
 # Tool kit for technical analysis and risk management
 def calculate_SMA(data, window):
-    return data['Close'].rolling(window=window).mean()
+    return data['收盘'].rolling(window=window).mean()
 
 def calculate_RSI(data, window):
-    delta = data['Close'].diff()
+    delta = data['收盘'].diff()
     up, down = delta.copy(), delta.copy()
     up[up < 0] = 0
     down[down > 0] = 0

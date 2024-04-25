@@ -13,16 +13,16 @@ class Investment:
         self.data = self.load_data()
 
     def load_data(self):
-        # 使用pandas_datareader从Yahoo Finance加载数据
-        import pandas_datareader as pdr
-        return pdr.get_data_yahoo(self.ticker, self.start_date, self.end_date)
-        # # 使用tushare获取A股数据
-        # df = ak.stock_zh_a_hist(symbol=self.ticker, start_date=self.start_date.strftime('%Y%m%d'),
-        #                         end_date=self.end_date.strftime('%Y%m%d'), adjust="")
-        # df['Date'] = pd.to_datetime(df['日期'])
-        # df.set_index('Date', inplace=True)
-        # df.sort_index(inplace=True)
-        # return df
+        # # 使用pandas_datareader从Yahoo Finance加载数据
+        # import pandas_datareader as pdr
+        # return pdr.get_data_yahoo(self.ticker, self.start_date, self.end_date)
+        # 使用tushare获取A股数据
+        df = ak.stock_zh_a_hist(symbol=self.ticker, start_date=self.start_date.strftime('%Y%m%d'),
+                                end_date=self.end_date.strftime('%Y%m%d'), adjust="")
+        df['Date'] = pd.to_datetime(df['日期'])
+        df.set_index('Date', inplace=True)
+        df.sort_index(inplace=True)
+        return df
     
     def run(self, result=False, plot=False):
         self.calculate_indicators()
@@ -38,7 +38,7 @@ class Investment:
     def evaluate_performance(self, result=False, plot=False):
         """评估投资的总体表现"""
         # 计算投资回报率
-        self.data['Market Return'] = self.data['Close'].pct_change()
+        self.data['Market Return'] = self.data['收盘'].pct_change()
         self.data['Strategy Return'] = self.data['Market Return'] * self.data['Signal'].shift(1)
         self.data['Cumulative Market Returns'] = (1 + self.data['Market Return']).cumprod()
         self.data['Cumulative Strategy Returns'] = (1 + self.data['Strategy Return']).cumprod()

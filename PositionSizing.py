@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class __TargetInfo:
+class _TargetInfo:
     """记录标的物的胜率与赔率"""
     def __init__(self, winProb, RewardRiskRatio):
         self.winProb = winProb
@@ -54,7 +54,7 @@ class PositionSizing:
         bond = Bond(ticker, self.start_date, self.end_date)
         bond.run()
         winProb, RewardRiskRatio = self.calculateWPRRR(bond)
-        bondInfo = __TargetInfo(winProb, RewardRiskRatio)
+        bondInfo = _TargetInfo(winProb, RewardRiskRatio)
         self.target[ticker] = bondInfo
     
     def trainCommodity(self, ticker):
@@ -62,7 +62,7 @@ class PositionSizing:
         commodity = Commodity(ticker, self.start_date, self.end_date)
         commodity.run()
         winProb, RewardRiskRatio = self.calculateWPRRR(commodity)
-        commodityInfo = __TargetInfo(winProb, RewardRiskRatio)
+        commodityInfo = _TargetInfo(winProb, RewardRiskRatio)
         self.target[ticker] = commodityInfo
     
     def trainETF(self, ticker):
@@ -70,7 +70,7 @@ class PositionSizing:
         etf = ETF(ticker, self.start_date, self.end_date)
         etf.run()
         winProb, RewardRiskRatio = self.calculateWPRRR(etf)
-        etfInfo = __TargetInfo(winProb, RewardRiskRatio)
+        etfInfo = _TargetInfo(winProb, RewardRiskRatio)
         self.target[ticker] = etfInfo
     
     def trainFund(self, ticker):
@@ -78,7 +78,7 @@ class PositionSizing:
         fund = Fund(ticker, self.start_date, self.end_date)
         fund.run()
         winProb, RewardRiskRatio = self.calculateWPRRR(fund)
-        fundInfo = __TargetInfo(winProb, RewardRiskRatio)
+        fundInfo = _TargetInfo(winProb, RewardRiskRatio)
         self.target[ticker] = fundInfo
     
     def trainStock(self, ticker):
@@ -86,7 +86,7 @@ class PositionSizing:
         stock = Stock(ticker, self.start_date, self.end_date)
         stock.run()
         winProb, RewardRiskRatio = self.calculateWPRRR(stock)
-        stockInfo = __TargetInfo(winProb, RewardRiskRatio)
+        stockInfo = _TargetInfo(winProb, RewardRiskRatio)
         self.target[ticker] = stockInfo
 
     

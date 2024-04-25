@@ -8,7 +8,7 @@ class ETF(Investment):
 
     def calculate_indicators(self):
         # 计算动量指标
-        self.data['Momentum'] = self.data['Close'].pct_change(periods=14) * 100
+        self.data['Momentum'] = self.data['收盘'].pct_change(periods=14) * 100
 
     def execute_strategy(self):
         # 动量策略：当动量正时买入，动量负时卖出
