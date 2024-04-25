@@ -30,4 +30,4 @@ if __name__ == '__main__':
     aapl_stock = Stock('600519', start_date, end_date)
     aapl_stock.calculate_indicators()
     aapl_stock.execute_strategy()
-    aapl_stock.evaluate_performance()
+    aapl_stock.evaluate_performance(plot=True)
