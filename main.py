@@ -11,15 +11,10 @@ if __name__ == '__main__':
     # 训练标的物并记录胜率与赔率
     sizing = PositionSizing(train_start_date, train_end_date)
     sizing.train('600519', 'Stock')
-    # sizing.train('SPY', 'ETF')
-    # sizing.train('GC=F', 'Commodity')
-    # sizing.train('TLT', 'Bond')
-    # sizing.train('VFIAX', 'Fund')
 
-    print(sizing['600519'].positionSize)
-    print(sizing['600519'].winProb)
-    print(sizing['600519'].RewardRiskRatio)
-
+    if sizing['600519'].DSize > 0 and sizing['600519'].DSize <= 1:
+        sizing['600519'].positionSize = sizing['600519'].DSize
+        
     # 初始化投资组合，设定初始资本
     initial_capital = 10000
     portfolio = InvestmentPortfolio(initial_capital, sizing)
