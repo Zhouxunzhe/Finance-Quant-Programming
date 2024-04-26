@@ -1,5 +1,6 @@
 import akshare as ak
 from Investment import Investment
+import matplotlib.pyplot as plt
 
 
 class StockInvestment(Investment):
@@ -10,7 +11,7 @@ class StockInvestment(Investment):
         self.position_size = 0
         self.active_trade = False
 
-    def fetch_data(self, start_date, end_date):
+    def fetch_from_akshare(self, start_date, end_date):
         # 获取股票数据，调整为后复权价格
         self.data = ak.stock_zh_a_daily(symbol=self.symbol, start_date=start_date, end_date=end_date, adjust="hfq")
 
@@ -71,12 +72,29 @@ class StockInvestment(Investment):
         self.generate_signals()
         self.apply_stop_loss_and_take_profit()
         self.simulate_trading()
-        return self.data['Portfolio_value'].iloc[-1] / self.initial_capital
+        return (self.data['Portfolio_value'].iloc[-1] / self.initial_capital,
+                self.data['close'].iloc[-1] / self.data['close'].iloc[0])
 
 
 # 使用示例
 if __name__ == '__main__':
-    stock = StockInvestment('sz000001')  # 示例股票代码
-    stock.fetch_data('20200101', '20201231')
-    final_return = stock.backtest_strategy()
-    print(f'策略最终回报: {final_return * 100:.2f}%')
+    stock = StockInvestment('sh600592')  # 示例股票代码
+    stock.fetch_data('20200101', '20201231', 'stocks', True)
+    strategy_return, market_return = stock.backtest_strategy()
+    print(f'策略最终回报: {strategy_return * 100:.2f}%')
+    print(f'市场最终回报: {market_return * 100:.2f}%')
+    # 绘制图表
+    plt.figure(figsize=(10, 5))
+    # 绘制资产总值
+    plt.plot(stock.data['date'], stock.data['Portfolio_value'], label='Portfolio Value', marker='o')
+    plt.xlabel('Date')
+    plt.ylabel('Value')
+    plt.title('Portfolio Value Over Time')
+    plt.grid(True)
+    # 绘制市场价格
+    plt.twinx()  # 使用双坐标轴
+    plt.plot(stock.data['date'], stock.data['close'], label='Market Price', color='red', linestyle='--', marker='x')
+    plt.ylabel('Market Price')
+    # 添加图例
+    plt.legend(loc="upper left")
+    plt.show()

@@ -1,5 +1,6 @@
 import akshare as ak
 from Investment import Investment
+import matplotlib.pyplot as plt
 
 class OptionsInvestment(Investment):
     def __init__(self, symbol, capital=100000):
@@ -8,7 +9,7 @@ class OptionsInvestment(Investment):
         self.capital = capital
         self.position_size = 0
 
-    def fetch_data(self, start_date, end_date):
+    def fetch_from_akshare(self, start_date, end_date):
         # 使用akshare获取期权数据
         self.data = ak.option_cffex_sz50_daily_sina(symbol=self.symbol)
 
@@ -52,13 +53,31 @@ class OptionsInvestment(Investment):
         self.calculate_technical_indicators()
         self.generate_signals()
         self.simulate_trading()
-        return self.data['Portfolio_value'].iloc[-1] / self.initial_capital
+        return (self.data['Portfolio_value'].iloc[-1] / self.initial_capital,
+                self.data['close'].iloc[-1] / self.data['close'].iloc[0])
+
 
 # 使用示例
 if __name__ == '__main__':
-    options = OptionsInvestment('ho2303P2350')  # 示例期权代码
-    options.fetch_data('2020-01-01', '2020-12-31')
-    options.calculate_technical_indicators()
-    options.generate_signals()
-    final_return = options.backtest_strategy()
-    print(f'策略最终回报: {final_return}')
+    option = OptionsInvestment('ho2303P2350')  # 示例期权代码
+    option.fetch_data('2020-01-01', '2020-12-31', 'options')
+    option.calculate_technical_indicators()
+    option.generate_signals()
+    strategy_return, market_return = option.backtest_strategy()
+    print(f'策略最终回报: {strategy_return * 100:.2f}%')
+    print(f'市场最终回报: {market_return * 100:.2f}%')
+    # 绘制图表
+    plt.figure(figsize=(10, 5))
+    # 绘制资产总值
+    plt.plot(option.data['date'], option.data['Portfolio_value'], label='Portfolio Value', marker='o')
+    plt.xlabel('Date')
+    plt.ylabel('Value')
+    plt.title('Portfolio Value Over Time')
+    plt.grid(True)
+    # 绘制市场价格
+    plt.twinx()  # 使用双坐标轴
+    plt.plot(option.data['date'], option.data['close'], label='Market Price', color='red', linestyle='--', marker='x')
+    plt.ylabel('Market Price')
+    # 添加图例
+    plt.legend(loc="upper left")
+    plt.show()

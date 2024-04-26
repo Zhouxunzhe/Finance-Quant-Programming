@@ -1,5 +1,6 @@
 from Investment import Investment
 import akshare as ak
+import matplotlib.pyplot as plt
 
 
 class FuturesInvestment(Investment):
@@ -10,7 +11,7 @@ class FuturesInvestment(Investment):
         self.position_size = 0
         self.active_position = False
 
-    def fetch_data(self, start_date, end_date):
+    def fetch_from_akshare(self, start_date, end_date):
         self.data = ak.futures_zh_daily_sina(symbol=self.symbol)
 
     def calculate_technical_indicators(self):
@@ -66,14 +67,31 @@ class FuturesInvestment(Investment):
         self.calculate_technical_indicators()
         self.generate_signals()
         self.simulate_trading()
-        return self.data['Portfolio_value'].iloc[-1] / self.initial_capital
+        return (self.data['Portfolio_value'].iloc[-1] / self.initial_capital,
+                self.data['close'].iloc[-1] / self.data['close'].iloc[0])
 
 
 # 使用示例
 if __name__ == '__main__':
-    futures = FuturesInvestment('RB0')  # 示例期货代码
-    futures.fetch_data('20200101', '20201231')
-    futures.calculate_technical_indicators()
-    futures.generate_signals()
-    final_return = futures.backtest_strategy()
-    print(f'策略最终回报: {final_return}')
+    future = FuturesInvestment('B0')  # 示例期货代码
+    future.fetch_data('20200101', '20201231', 'futures', True)
+    future.calculate_technical_indicators()
+    future.generate_signals()
+    strategy_return, market_return = future.backtest_strategy()
+    print(f'策略最终回报: {strategy_return * 100:.2f}%')
+    print(f'市场最终回报: {market_return * 100:.2f}%')
+    # 绘制图表
+    plt.figure(figsize=(10, 5))
+    # 绘制资产总值
+    plt.plot(future.data['date'], future.data['Portfolio_value'], label='Portfolio Value', marker='o')
+    plt.xlabel('Date')
+    plt.ylabel('Value')
+    plt.title('Portfolio Value Over Time')
+    plt.grid(True)
+    # 绘制市场价格
+    plt.twinx()  # 使用双坐标轴
+    plt.plot(future.data['date'], future.data['close'], label='Market Price', color='red', linestyle='--', marker='x')
+    plt.ylabel('Market Price')
+    # 添加图例
+    plt.legend(loc="upper left")
+    plt.show()
