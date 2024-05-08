@@ -1,5 +1,5 @@
 import akshare as ak
-from Investment import Investment
+from .Investment import Investment
 import matplotlib.pyplot as plt
 
 
@@ -58,12 +58,13 @@ class StockInvestment(Investment):
                 position = self.capital * kelly_fraction / row['close']
                 self.capital -= position * row['close']
                 self.position_size += position
-                print(f"buy: {self.capital}, {self.position_size}, {row['close']}")
+                # print(f"buy: {self.capital}, {self.position_size}, {row['close']}")
             elif row['Position'] > 0:
                 # sell
                 self.capital += self.position_size * row['close']
                 self.position_size = 0
-                print(f"sell: {self.capital}, {self.position_size}, {row['close']}")
+                # print(f"sell: {self.capital}, {self.position_size}, {row['close']}")
+            self.data['Portfolio_value'] = self.data['Portfolio_value'].astype(float)
             self.data.at[i, 'Portfolio_value'] = self.capital + self.position_size * row['close']
 
     def backtest_strategy(self):

@@ -1,5 +1,5 @@
 import akshare as ak
-from Investment import Investment
+from .Investment import Investment
 import matplotlib.pyplot as plt
 
 
@@ -12,7 +12,21 @@ class BondInvestment(Investment):
 
     def fetch_from_akshare(self, start_date, end_date):
         # 使用akshare的fund_etf_hist_sina获取基金数据
-        self.data = ak.bond_zh_hs_daily(symbol=self.symbol)
+        from akshare.bond.cons import (
+            zh_sina_bond_hs_hist_url,
+        )
+        import datetime
+        import requests
+
+        r = requests.get(
+            zh_sina_bond_hs_hist_url.format(
+                self.symbol, datetime.datetime.now().strftime("%Y_%m_%d")
+            )
+        )
+        if r.status_code == 404:
+            self.data = None
+        else:
+            self.data = ak.bond_zh_hs_daily(symbol=self.symbol)
 
     def calculate_technical_indicators(self):
         # 计算技术指标，例如移动平均线和波动率
@@ -36,11 +50,12 @@ class BondInvestment(Investment):
                 position = self.capital / row['close']
                 self.capital -= position * row['close']
                 self.position_size += position
-                print(f"buy: {self.capital}, {self.position_size}, {row['close']}")
+                # print(f"buy: {self.capital}, {self.position_size}, {row['close']}")
             elif row['Position'] < 0 and self.position_size > 0:
                 self.capital += self.position_size * row['close']
                 self.position_size = 0
-                print(f"sell: {self.capital}, {self.position_size}, {row['close']}")
+                # print(f"sell: {self.capital}, {self.position_size}, {row['close']}")
+            self.data['Portfolio_value'] = self.data['Portfolio_value'].astype(float)
             self.data.at[i, 'Portfolio_value'] = self.capital + (self.position_size * row['close'])
 
     def backtest_strategy(self):

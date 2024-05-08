@@ -1,4 +1,4 @@
-from Investment import Investment
+from .Investment import Investment
 import akshare as ak
 import matplotlib.pyplot as plt
 
@@ -43,11 +43,12 @@ class FuturesInvestment(Investment):
                 position = self.capital * kelly_fraction / row['close']
                 self.capital -= position * row['close']
                 self.position_size += position
-                print(f"buy: {self.capital}, {self.position_size}, {row['close']}")
+                # print(f"buy: {self.capital}, {self.position_size}, {row['close']}")
             elif row['Position'] < 0:
                 self.capital += self.position_size * row['close']
                 self.position_size = 0
-                print(f"sell: {self.capital}, {self.position_size}, {row['close']}")
+                # print(f"sell: {self.capital}, {self.position_size}, {row['close']}")
+            self.data['Portfolio_value'] = self.data['Portfolio_value'].astype(float)
             self.data.at[i, 'Portfolio_value'] = self.capital + (self.position_size * row['close'])
 
     def calculate_kelly_criterion(self):
