@@ -2,7 +2,7 @@ import os
 import pandas as pd
 
 
-class Investment:
+class InvestmentClass:
     def __init__(self, symbol):
         self.symbol = symbol
         self.data = None

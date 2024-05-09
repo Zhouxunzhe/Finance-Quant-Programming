@@ -44,7 +44,7 @@ $ python investment/Stock.py # you can modify the file name
 
 ## Troubleshooting
 
-可能文件相对路径会存在问题，如果无法正常在命令行中运行的话，请打开Python IDE，如PyCharm，设置`QuantProgramming`为项目文件，运行`main.py`和其他投资品文件即可。（亲测可行）
+可能文件相对路径会存在问题，如果无法正常在命令行中运行的话，请打开`Python IDE`，如`PyCharm`，设置`QuantProgramming`为项目文件，运行`main.py`和其他投资品文件即可。（已修复，两种方式都可正常运行）
 
 # 量化投资编程
 量化程序设计期中项目 2024春

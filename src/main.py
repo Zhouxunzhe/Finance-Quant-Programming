@@ -1,7 +1,7 @@
-from src.investment import (StockInvestment, ETFInvestment, BondInvestment,
-                            FuturesInvestment, FundInvestment, OptionsInvestment)
-from src.selecting import (select_stocks, select_bonds, select_options,
-                           select_funds, select_futures, select_etfs)
+from investment import (StockInvestment, ETFInvestment, BondInvestment,
+                        FuturesInvestment, FundInvestment, OptionsInvestment)
+from selecting import (select_stocks, select_bonds, select_options,
+                       select_funds, select_futures, select_etfs)
 
 # from Portfolio import InvestmentPortfolio
 # from PositionSizing import PositionSizing
