@@ -1,4 +1,4 @@
-from .Investment import Investment
+from src.investment.Investment import Investment
 import akshare as ak
 import matplotlib.pyplot as plt
 
@@ -75,7 +75,7 @@ class FuturesInvestment(Investment):
 # 使用示例
 if __name__ == '__main__':
     future = FuturesInvestment('B0')  # 示例期货代码
-    future.fetch_data('20200101', '20201231', 'futures', True)
+    future.fetch_data('20200101', '20201231', 'futures')
     future.calculate_technical_indicators()
     future.generate_signals()
     strategy_return, market_return = future.backtest_strategy()

@@ -1,5 +1,5 @@
 import akshare as ak
-from .Investment import Investment
+from src.investment.Investment import Investment
 import matplotlib.pyplot as plt
 
 
@@ -80,7 +80,7 @@ class StockInvestment(Investment):
 # 使用示例
 if __name__ == '__main__':
     stock = StockInvestment('sh600592')  # 示例股票代码
-    stock.fetch_data('20200101', '20201231', 'stocks', True)
+    stock.fetch_data('20200101', '20201231', 'stocks')
     strategy_return, market_return = stock.backtest_strategy()
     print(f'策略最终回报: {strategy_return * 100:.2f}%')
     print(f'市场最终回报: {market_return * 100:.2f}%')
