@@ -1,9 +1,12 @@
 import akshare as ak
-from investment.Investment import Investment
+import sys
+sys.path.append('.')
+sys.path.append('..')
+from src.investment.Investment import InvestmentClass
 import matplotlib.pyplot as plt
 
 
-class StockInvestment(Investment):
+class StockInvestment(InvestmentClass):
     def __init__(self, symbol, capital=100000):
         super().__init__(symbol)
         self.capital = capital

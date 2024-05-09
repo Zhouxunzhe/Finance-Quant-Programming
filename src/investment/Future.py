@@ -1,9 +1,12 @@
-from investment.Investment import Investment
+import sys
+sys.path.append('.')
+sys.path.append('..')
+from src.investment.Investment import InvestmentClass
 import akshare as ak
 import matplotlib.pyplot as plt
 
 
-class FuturesInvestment(Investment):
+class FuturesInvestment(InvestmentClass):
     def __init__(self, symbol, capital=100000):
         super().__init__(symbol)
         self.initial_capital = capital
