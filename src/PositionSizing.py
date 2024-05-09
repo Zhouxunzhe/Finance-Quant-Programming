@@ -36,12 +36,14 @@ class PositionSizing:
     def train(self, ticker, asset):
         if asset == 'Bond':
             self.trainBond(ticker)
-        elif asset == 'Commodity':
-            self.trainCommodity(ticker)
         elif asset == 'ETF':
             self.trainETF(ticker)
         elif asset == 'Fund':
             self.trainFund(ticker)
+        elif asset == "Future":
+            self.trainFuture(ticker)
+        elif asset == "Option":
+            self.trainOption(ticker)
         elif asset == 'Stock':
             self.trainStock(ticker)
 
@@ -61,41 +63,67 @@ class PositionSizing:
         return winProb, rateWin, rateLoss
 
     def trainBond(self, ticker):
-        from investment.Bond import Bond
-        bond = Bond(ticker, self.start_date, self.end_date)
-        bond.run()
+        from investment import BondInvestment
+        bond = BondInvestment(ticker)
+        bond.fetch_data(self.start_date, self.end_date, 'bonds')
+        bond.calculate_technical_indicators()
+        bond.generate_signals()
+        bond.backtest_strategy()
         winProb, rateWin, rateLoss = self.calculatePWL(bond)
         bondInfo = _TargetInfo(winProb, rateWin, rateLoss)
         self.target[ticker] = bondInfo
     
-    # def trainCommodity(self, ticker):
-    #     from investment.Commodity import Commodity
-    #     commodity = Commodity(ticker, self.start_date, self.end_date)
-    #     commodity.run()
-    #     winProb, rateWin, rateLoss = self.calculatePWL(commodity)
-    #     commodityInfo = _TargetInfo(winProb, rateWin, rateLoss)
-    #     self.target[ticker] = commodityInfo
-    
     def trainETF(self, ticker):
-        from investment.ETF import ETF
-        etf = ETF(ticker, self.start_date, self.end_date)
-        etf.run()
+        from investment import ETFInvestment
+        etf = ETFInvestment(ticker)
+        etf.fetch_data(self.start_date, self.end_date, 'etfs')
+        etf.calculate_technical_indicators()
+        etf.generate_signals()
+        etf.backtest_strategy()
         winProb, rateWin, rateLoss = self.calculatePWL(etf)
         etfInfo = _TargetInfo(winProb, rateWin, rateLoss)
         self.target[ticker] = etfInfo
     
     def trainFund(self, ticker):
-        from investment.Fund import Fund
-        fund = Fund(ticker, self.start_date, self.end_date)
-        fund.run()
+        from investment import FundInvestment
+        fund = FundInvestment(ticker)
+        fund.fetch_data(self.start_date, self.end_date, 'funds')
+        fund.calculate_technical_indicators()
+        fund.generate_signals()
+        fund.backtest_strategy()
         winProb, rateWin, rateLoss = self.calculatePWL(fund)
         fundInfo = _TargetInfo(winProb, rateWin, rateLoss)
         self.target[ticker] = fundInfo
+
+    def trainFuture(self, ticker):
+        from investment import FutureInvestment
+        future = FutureInvestment(ticker)
+        future.fetch_data(self.start_date, self.end_date, 'futures')
+        future.calculate_technical_indicators()
+        future.generate_signals()
+        future.backtest_strategy()
+        winProb, rateWin, rateLoss = self.calculatePWL(future)
+        futureInfo = _TargetInfo(winProb, rateWin, rateLoss)
+        self.target[ticker] = futureInfo
+
+    def trainOption(self, ticker):
+        from investment import OptionInvestment
+        option = OptionInvestment(ticker)
+        option.fetch_data(self.start_date, self.end_date, 'options')
+        option.calculate_technical_indicators()
+        option.generate_signals()
+        option.backtest_strategy()
+        winProb, rateWin, rateLoss = self.calculatePWL(option)
+        optionInfo = _TargetInfo(winProb, rateWin, rateLoss)
+        self.target[ticker] = optionInfo
     
     def trainStock(self, ticker):
-        from investment.Stock import Stock
-        stock = Stock(ticker, self.start_date, self.end_date)
-        stock.run()
+        from investment import StockInvestment
+        stock = StockInvestment(ticker)
+        stock.fetch_data(self.start_date, self.end_date, 'stocks')
+        stock.calculate_technical_indicators()
+        stock.generate_signals()
+        stock.backtest_strategy()
         winProb, rateWin, rateLoss = self.calculatePWL(stock)
         stockInfo = _TargetInfo(winProb, rateWin, rateLoss)
         self.target[ticker] = stockInfo

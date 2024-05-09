@@ -1,5 +1,5 @@
 import akshare as ak
-from src.investment.Investment import Investment
+from investment.Investment import Investment
 import matplotlib.pyplot as plt
 
 

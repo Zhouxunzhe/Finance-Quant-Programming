@@ -1,6 +1,6 @@
-from src.investment import (StockInvestment, ETFInvestment, BondInvestment,
+from investment import (StockInvestment, ETFInvestment, BondInvestment,
                             FuturesInvestment, FundInvestment, OptionsInvestment)
-from src.selecting import (select_stocks, select_bonds, select_options,
+from selecting import (select_stocks, select_bonds, select_options,
                            select_funds, select_futures, select_etfs)
 
 # from Portfolio import InvestmentPortfolio
@@ -75,34 +75,3 @@ if __name__ == '__main__':
 
     print(f'策略最终回报: {total_strategy_return * 100 / num_investments:.2f}%')
     print(f'市场最终回报: {total_market_return * 100 / num_investments:.2f}%')
-
-    # # 训练标的物并记录胜率与赔率
-    # sizing = PositionSizing(train_start_date, train_end_date)
-    # sizing.train('600519', 'Stock')
-    #
-    # if sizing['600519'].DSize > 0 and sizing['600519'].DSize <= 1:
-    #     sizing['600519'].positionSize = sizing['600519'].DSize
-    #
-    # # 初始化投资组合，设定初始资本
-    # initial_capital = 10000
-    # portfolio = InvestmentPortfolio(initial_capital, sizing)
-    #
-    # # 定义投资期间
-    # invest_start_date = datetime.datetime(2019, 1, 1)
-    # invest_end_date = datetime.datetime(2020, 1, 1)
-    #
-    # # 添加不同的投资类型到投资组合
-    # portfolio.add_investment(Stock('600519', invest_start_date, invest_end_date), initial_capital)
-    # # selecting.add_investment(ETF('SPY', invest_start_date, invest_end_date), initial_capital)
-    # # selecting.add_investment(Commodity('GC=F', invest_start_date, invest_end_date), initial_capital)
-    # # selecting.add_investment(Bond('TLT', invest_start_date, invest_end_date), initial_capital)
-    # # selecting.add_investment(Fund('VFIAX', invest_start_date, invest_end_date), initial_capital)
-    #
-    # # 运行整个投资组合
-    # portfolio.run()
-    #
-    # # 输出整体投资组合的表现
-    # portfolio.portfolio_performance()
-    #
-    # # 如果需要进一步操作，如重新分配资本等
-    # portfolio.reallocate_capital()

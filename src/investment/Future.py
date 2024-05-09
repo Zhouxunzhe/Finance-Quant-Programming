@@ -1,4 +1,4 @@
-from src.investment.Investment import Investment
+from investment.Investment import Investment
 import akshare as ak
 import matplotlib.pyplot as plt
 
