@@ -8,7 +8,7 @@ class Investment:
         self.data = None
 
     def fetch_data(self, start_date, end_date, folder_name, is_save=False):
-        file_path = f'../data/{folder_name}/{self.symbol}.csv'
+        file_path = f'./data/{folder_name}/{self.symbol}.csv'
         # 首先检查本地文件是否存在
         if os.path.exists(file_path):
             print(f"Loading data from local file: {file_path}")
@@ -16,11 +16,11 @@ class Investment:
         else:
             print(f"Local file not found. Fetching data from akshare for {self.symbol}")
             self.fetch_from_akshare(start_date, end_date)
-            if is_save:
+            if is_save and self.data is not None:
                 self.save_data(folder_name)
 
     def save_data(self, folder_name):
-        folder_path = f'../data/{folder_name}'
+        folder_path = f'./data/{folder_name}'
         os.makedirs(folder_path, exist_ok=True)
         file_path = os.path.join(folder_path, f'{self.symbol}.csv')
         self.data.to_csv(file_path, index=False)

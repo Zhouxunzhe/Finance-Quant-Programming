@@ -28,7 +28,7 @@ if __name__ == '__main__':
 
     for etf_name in etf_list:
         etf = ETFInvestment(etf_name, capital=100000)  # 示例ETF指数代码
-        etf.fetch_data('2020-01-01', '2020-12-31', 'etfs')
+        etf.fetch_data('2020-01-01', '2020-12-31', 'etfs', True)
         etf.calculate_technical_indicators()
         etf.generate_signals()
         strategy_return, market_return = etf.backtest_strategy()
@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     for fund_name in fund_list:
         fund = FundInvestment(fund_name, capital=100000)  # 示例基金代码
-        fund.fetch_data('20200101', '20201231', 'funds')
+        fund.fetch_data('20200101', '20201231', 'funds', True)
         fund.calculate_technical_indicators()
         fund.generate_signals()
         strategy_return, market_return = fund.backtest_strategy()
@@ -55,7 +55,7 @@ if __name__ == '__main__':
 
     for option_name in option_list:
         option = OptionsInvestment(option_name)  # 示例期权代码
-        option.fetch_data('2020-01-01', '2020-12-31', 'options')
+        option.fetch_data('2020-01-01', '2020-12-31', 'options', True)
         option.calculate_technical_indicators()
         option.generate_signals()
         strategy_return, market_return = option.backtest_strategy()
@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     for bond_name in bond_list:
         bond = BondInvestment(bond_name, capital=100000)  # Example bond symbol
-        bond.fetch_data('20200101', '20201231', 'bonds')
+        bond.fetch_data('20200101', '20201231', 'bonds', True)
         if bond.data is not None:
             bond.calculate_technical_indicators()
             bond.generate_signals()
